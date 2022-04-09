@@ -1,0 +1,45 @@
+---
+import Layout from "../components/Layout.astro";
+import Story from "../components/Story.astro";
+
+import { getStories } from "../lib/api";
+
+const type = Astro.params.stories || "top";
+const url = new URL(Astro.request.url);
+const page = +(url.searchParams.get("page") || 1);
+const stories = await getStories(type, page);
+---
+<Layout>
+  <div class="news-view">
+		<div class="news-list-nav">
+			{ page > 1 ?
+				<a
+					class="page-link"
+					href={`${type}?page=${page - 1}`}
+					aria-label="Previous Page">
+					{"<"} prev
+				</a>
+				:
+				<span class="page-link disabled" aria-hidden="true">{"<"} prev</span>
+			}
+			<span>page {page}</span>
+			<!-- sometimes the length isn't 30? -->
+			{ stories.length >= 28 ?
+				<a
+					class="page-link"
+					href={`${type}?page=${page + 1}`}
+					aria-label="Next Page">
+					more {">"}
+				</a>
+			:
+				<span class="page-link" aria-hidden="true">more {">"}</span>
+			}
+		</div>
+		<main class="news-list">
+			<ul>{
+				stories.map(story => <Story story={story} />)
+			}
+			</ul>
+		</main>
+  </div>
+</Layout>

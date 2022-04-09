@@ -1,0 +1,17 @@
+---
+import Toggle from "./Toggle";
+const { comment } = Astro.props;
+---
+<li class="comment">
+  <div class="by">
+    <a href={`/user/${comment.user}`}>${comment.user}</a>
+    {` ${comment.time_ago}`}
+  </div>
+  <div class="text" set:html={comment.content}/>
+  {
+    comment.comments.length ?
+    <Toggle client:idle>{
+      comment.comments.map(nested => <Astro.self comment={nested} />)
+    }</Toggle> : ""
+  }
+</li>
