@@ -248,6 +248,18 @@ a {
   background-color: transparent;
   margin-bottom: -0.5em;
 }
+.comment .toggle.open a:nth-child(1) {
+  display: inline-block;
+}
+.comment .toggle a:nth-child(1) {
+  display: none;
+}
+.comment .toggle.open a:nth-child(2) {
+  display: none;
+}
+.comment .toggle a:nth-child(2) {
+  display: inline-block;
+}
 .user-view {
   background-color: #fff;
   box-sizing: border-box;

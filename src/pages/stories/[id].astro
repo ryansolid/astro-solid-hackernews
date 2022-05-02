@@ -6,6 +6,7 @@ const story = await getStory(Astro.params.id);
 ---
 <Layout>
   {story && (
+    <>
     <div class="item-view">
       <div class="item-view-header">
         <a href={story.url} target="_blank">
@@ -31,5 +32,28 @@ const story = await getStory(Astro.params.id);
         </ul>
       </div>
     </div>
+    <script>
+      document.addEventListener("click", (event) => {
+        let classList = event.target.parentElement.classList;
+        if (!classList) return;
+
+        let id = event.target.getAttribute("data-cc");
+        if (id) {
+          event.preventDefault();
+          let el = document.querySelector("[data-cs='" + id + "']");
+          if (el) el.style.display = "none";
+          classList.remove("open");
+          return;
+        }
+        id = event.target.getAttribute("data-ce");
+        if (id) {
+          event.preventDefault();
+          let el = document.querySelector("[data-cs='" + id + "']");
+          if (el) el.style.display = "block";
+          classList.add("open");
+        }
+      });
+    </script>
+    </>
   )}
 </Layout>

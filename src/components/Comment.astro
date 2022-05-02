@@ -1,5 +1,4 @@
 ---
-import Toggle from "./Toggle";
 const { comment } = Astro.props;
 ---
 <li class="comment">
@@ -10,8 +9,18 @@ const { comment } = Astro.props;
   <div class="text" set:html={comment.content}/>
   {
     comment.comments.length ?
-    <Toggle client:idle>{
-      comment.comments.map(nested => <Astro.self comment={nested} />)
-    }</Toggle> : ""
+    <>
+      <div class="toggle open">
+        <a data-cc={comment.id}>[-]</a>
+        <a data-ce={comment.id}>[+] comments collapsed</a>
+      </div>
+      <ul
+        data-cs={comment.id}
+        class="comment-children"
+      >
+        {comment.comments.map(nested => <Astro.self comment={nested} />)}
+      </ul>
+    </>
+ : ""
   }
 </li>
