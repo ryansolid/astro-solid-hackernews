@@ -4,7 +4,7 @@ export default function Toggle(props) {
   const [open, setOpen] = createSignal(true);
   return (
     <>
-      <div class="toggle" classList={{ open: open() }}>
+      <div class="toggle" classList={{ open: open() }} $ServerOnly>
         <a onClick={() => setOpen((o) => !o)}>
           {open() ? "[-]" : "[+] comments collapsed"}
         </a>
@@ -12,6 +12,7 @@ export default function Toggle(props) {
       <ul
         class="comment-children"
         style={{ display: open() ? "block" : "none" }}
+        $ServerOnly
       >
         {props.children}
       </ul>
